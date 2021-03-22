@@ -4,41 +4,41 @@
 \subsection{Convergence of Sequences of Functions}
 The weakest form of convergence that we will analyze in this course is pointwise convergence.
 \begin{defn}{Pointwise Convergence}{pointwise_convergence}
-Let $X$ be a set , and $(f_n)$ be a sequence of functions $f_n: X \to \R$. We claim that $(f_n) \to f$ converges pointwisely to a function $f: X \to \R$ if $\forall x_0 \in X$, we have $\lim_{n \to \infty} f_n(x_0) = f(x_0)$ We can also write this equivalently as (insert epsilon definition of pointwise convergence).
+Let \(X\) be a set , and \((f_n)\) be a sequence of functions \(f_n: X \to \R\). We claim that \((f_n) \to f\) converges pointwisely to a function \(f: X \to \R\) if \(\forall x_0 \in X\), we have \(\lim_{n \to \infty} f_n(x_0) = f(x_0)\) We can also write this equivalently as (insert epsilon definition of pointwise convergence).
 \end{defn}
-Note that a sequence of continuous functions can converge pointwisely to a non continuous function (consider $(f_n = x^n)$). (Insert triangle function example with constant area of 1/2 that converges to f(x) = 0, but does not converge in integral). We can now define a stronger notion of convergence that deals with the issues of failure to converge in continuity and in integration. 
+Note that a sequence of continuous functions can converge pointwisely to a non continuous function (consider \((f_n = x^n)\)). (Insert triangle function example with constant area of 1/2 that converges to f(x) = 0, but does not converge in integral). We can now define a stronger notion of convergence that deals with the issues of failure to converge in continuity and in integration. 
 \begin{defn}{Uniform Convergence}{function_uniform_convergence}
-We claim that $(f_n) \to f$ converges uniformly to a function $f: X \to \R$ if $\forall \epsilon > 0,\exists N > 0$ such that $\forall x_0 \in X,\forall n > N, |f_n(x_0) - f(x_0)| < \epsilon$. The key difference between this definition of convergence and the pointwise definition of convergence is that uniform convergence requires $N$ to be dependent only on $\epsilon$, where as $N$ can be dependent on both $\epsilon$ and $x_0$ in the definition of pointwise convergence.
+We claim that \((f_n) \to f\) converges uniformly to a function \(f: X \to \R\) if \(\forall \epsilon > 0,\exists N > 0\) such that \(\forall x_0 \in X,\forall n > N, |f_n(x_0) - f(x_0)| < \epsilon\). The key difference between this definition of convergence and the pointwise definition of convergence is that uniform convergence requires \(N\) to be dependent only on \(\epsilon\), where as \(N\) can be dependent on both \(\epsilon\) and \(x_0\) in the definition of pointwise convergence.
 \end{defn}
 Let us now see how exactly uniform convergence avoids some of the issues with pointwise convergence.
 (Insert theorem that a sequence of continuous functions that converge uniformly implies that their convergent function is also continuous)
 \begin{thm}{}{continuous_uniform_implies_continuous}
-If $(f_n)$ is a sequence of continuous functions on some set $X$, and $(f_n) \to f$ uniformly, then $f$ is continuous on $X$.
+If \((f_n)\) is a sequence of continuous functions on some set \(X\), and \((f_n) \to f\) uniformly, then \(f\) is continuous on \(X\).
 \newline
 \begin{proof}
-Since $(f_n)\to f$ uniformly, we know that $\exists N$ s.t. 
+Since \((f_n)\to f\) uniformly, we know that \(\exists N\) s.t. 
 c\begin{equation*}
 n > N \implies |f(x) - f_n(x)| < \frac{\epsilon}{3}
 \end{equation*}
 
-Now, we pick some $n>N$. Since $f_n$ is continuous, we know that $\exists \delta > 0$ s.t. 
+Now, we pick some \(n>N\). Since \(f_n\) is continuous, we know that \(\exists \delta > 0\) s.t. 
 \begin{equation*}
 |x - x_0| < \delta \implies |f_n(x) - f_n(x_0)| < \frac{\epsilon}{3}
 \end{equation*}
 
-$\forall x_0,x \in X, \forall \epsilon > 0,$
+\(\forall x_0,x \in X, \forall \epsilon > 0,\)
 \newline
-$|x - x_0| < \delta \implies$ 
+\(|x - x_0| < \delta \implies\) 
 \begin{align*}
 |f(x) - f(x_0)| &\leq |f(x) - f_n(x)| + |f_n(x) - f_n(x_0)| + |f_n(x_0) - f(x_0)| \\
 		   &< \frac{\epsilon}{3} + \frac{\epsilon}{3} + \frac{\epsilon}{3} \\
 		   &= \epsilon
 \end{align*}
-Thus, $f$ is continuous on $X$.
+Thus, \(f\) is continuous on \(X\).
 
 
 
 
 \end{proof}
 \end{thm}
-(Insert theorem that if we have a sequence of continuous functions that converge to f uniformly, the limit of the integral of $f_n$ is the same as the integral of f)
+(Insert theorem that if we have a sequence of continuous functions that converge to f uniformly, the limit of the integral of \(f_n\) is the same as the integral of f)

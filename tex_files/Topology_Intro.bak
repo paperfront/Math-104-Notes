@@ -1,0 +1,18 @@
+\section{A Brief Remark on Topology}
+In this section, will introduce the notion of a metric space. While we will not delve very deep, it is important to start considering how the absolute value distance function we will use on the real numbers can actually be abstracted, and that many results we prove on real numbers are much more general.
+\newline
+When working with the set of real numbers, we are able to perform much of our analysis through the use of a distance function, namely $d(x,y) = |x - y|$. As seen in (insert chapter 1 reference), $d$ satisfies the triangle inequality, which we will make important use of very soon in our discussion of sequences. However, it turns out that many results on the real numbers that involve $d$ make use of a small set of fundamental properties that the absolute value function demonstrates. As such, we could perform the same analysis with other functions that also demonstrate these same properties so long as we are able to write them out explicitly.  We begin this abstraction process by defining the concepts of a metric, and metric space. 
+\newline
+\begin{defn}{Metric Space}{metric_space}
+Let S be a set and suppose $d$ is a function defined on all pairs $(x, y)$. We call $d$ a metric (or distance function) on S iff it satisfies the following conditions:
+\begin{flalign}
+&d(x,x) = 0 \text{ $\forall x \in S$} \\
+&d(x,y) > 0\text{ for distinct $x,y \in S$} \\
+&d(x,y) = d(y,x)  \text{ $\forall x,y \in S$} \\
+&d(x,z) \leq d(x,y) + d(y,z)\ \forall x,y,z\in S
+\end{flalign}
+
+A \emph{metric space} $M$ is a pair $(S, d)$ where $d$ is a metric on $S$. Note that there can be multiple valid metrics on any given set $S$, as we shall see soon.
+\end{defn}
+
+As you read the coming section on sequences, please consider the situations in which it may be possible to replace the operations we perform on $|x - y|$ with the more general $d(x,y)$.
