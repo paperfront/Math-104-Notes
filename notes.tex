@@ -1,0 +1,75 @@
+\documentclass[11pt, oneside]{article}   	% use "amsart" instead of "article" for AMSLaTeX format       		
+% See geometry.pdf to learn the layout options. There are lots.		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for rotated page geometry
+%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode
+								% TeX will automatically convert eps --> pdf in pdflatex		
+\usepackage{amssymb}
+\usepackage{titlesec}
+\usepackage{titletoc}
+\usepackage{lipsum}
+
+%SetFonts
+
+%SetFonts
+
+
+% Definitions
+\newcommand{\N}{{\mathbb N}}
+\newcommand{\Q}{{\mathbb Q}}
+\newcommand{\R}{{\mathbb R}}
+
+\usepackage[left=3cm,right=3cm,top=2cm,bottom=2cm]{geometry} % page settings
+\usepackage{amsmath} % provides many mathematical environments & tools
+\usepackage{amsthm}
+
+\usepackage{tcolorbox}
+\tcbuselibrary{theorems}
+
+\setlength{\parindent}{0mm}
+\setcounter{tocdepth}{2}
+
+%Definitions and Theorems
+\theoremstyle{definition}
+\newtcbtheorem[number within=section]{defn}{Definition}%
+{colback=green!5,colframe=green!35!black,fonttitle=\bfseries}{thm}
+
+\newtcbtheorem[number within=section]{thm}{Theorem}%
+{colback=purple!5,colframe=purple!35!black,fonttitle=\bfseries}{thm}
+
+\begin{document}
+
+\title{Math 104: Introduction to Analysis}
+\author{Matthew Lacayo}
+\date{\today}
+\maketitle
+
+The notes scribed here follow the textbook Elementary Analysis by Kenneth A. Ross. Some additional remarks may be included based on the lecture teachings of Professor Wei Fan. I have slightly reordered some ideas - namely I began my introduction to topology before beginning the discussion of sequences. This is just so that all concepts can be presented in terms of both topology and the real number system.
+
+\newpage
+
+\tableofcontents
+
+
+\newpage
+\include{Introduction}
+
+\newpage
+\include{Topology_Intro}
+
+\newpage
+\include {Sequences_and_Series}
+
+\newpage
+\include{Topology_Part_2}
+
+\newpage
+\include{Continuity}
+
+
+
+
+
+
+
+\end{document}
