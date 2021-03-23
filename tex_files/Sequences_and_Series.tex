@@ -2,7 +2,16 @@
 \subsection{Limits of Sequences}
 
 %TODO Define limits in metric spaces
-Definition of a convergent sequence in a metric space: \label{metric_space_sequence}
+\begin{defn}{Convergent Sequence in Metric Space}{metric_space_sequence_convergence}
+Let \((S, d)\) be a metric space. Let \((a_n)\) be a sequence of points such that each \(a_n \in S\). \newline 
+\(\lim_{n\to\infty}a_n = a \in S\) if:
+\begin{align*}
+  &\textrm{for each \(\epsilon > 0\), there exists \(N > 0\) such that }\\
+  &n > N \implies d(a_n, a) < \epsilon
+\end{align*}
+In this case, we call \((a_n)\) convergent. This is another example of extending ideas we develop on \(\R\) to work on a general metric space \((S, d)\).
+\end{defn}
+
 
 
 \subsection{Monotone Sequences and Cauchy Sequences}

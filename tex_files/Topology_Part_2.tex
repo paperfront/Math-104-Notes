@@ -1,19 +1,219 @@
 \section{Topology Part 2}
-\subsection{Open and Closed Sets}
-%TODO Define open and closed sets 
+We will now expand upon the concept of metric spaces that we covered in \ref{defn:metric_space}. The basis of most topological concepts we will cover are derived from the  definitions of open and closed sets in the following section. 
+\subsection{Open Sets}
+A helpful tool for understanding open and closed sets will be the idea of an 'open ball'. This name will be justified after we have defined what an open set is.
+\begin{defn}{Open Ball}{open_ball}
+For some metric space \((S, d)\), \(x\in S\), \(r > 0\),
+\begin{displaymath}
+  B_r(x) := \{y \in S: d(x,y) < r\} \subseteq S
+\end{displaymath}
+I will sometimes refer to this concept as an 'epsilon ball', since we will often be considering very small values of \(r\). Thus, we can have an equivalent definition by replacing \(r\) with \(\epsilon\).
+\end{defn}
+
+\begin{exmp}{}{}
+\((\R, d_{std})\): \(B_1(3) = (2,4)\) where \((2,4)\) is the open interval between 2 and 4.
+\end{exmp}
+\begin{exmp}{}{}
+\((\R^2, d_{std})\): \(B_2((0, 0)) = \{(x, y) \in \R^2: x^2 + y^2 < 4\}\). Note that this is a circle of radius 2 centered at the origin.
+\end{exmp}
+
+The reason we call this a ball is because of how we can visualize this set in the metric spaces of \((\R^2,d_{std})\) and \((\R^3, d_{std})\). In \((\R^2,d_{std})\), we can visualize the epsilon ball as the circle of radius \(r\) centered at \(x\). Similarly, in \(\R^3\) we can visualize this as a sphere of radius \(r\) centered at \(x\). In general, one can think of the open ball in \(\R^k\) as being a k-dimensional sphere. Another detail to note is that we need not be working with a metric space of the form \((\R^k, d_{std})\) for the open ball to be useful. We simply reference \(\R^k\) in examples since it is easiest to visualize. 
+\newline
+
+ 
+
+\begin{defn}{Open Set}{open_set}
+Let \((S, d)\) be a metric space. Let \(E \subseteq S\). 
+\newline
+\(E \subseteq S\) is open if for all \(x \in E\), there \textbf{\textit{exists}} some \(r > 0\) such that \(B_r(x) \subseteq E\).
+
+\end{defn}
+%TODO insert open set diagram
+The important take away from the above definition is that for any point \(x \in E\), we just need to be able to find 1 value of \(r\) that can be as small as we like such that the ball centered at \(x\) of radius \(r\) is contained entirely within \(E\). 
+\newline
+
+\begin{exmp}{}{}
+\([0, 1] \subseteq \R\) is not open. Consider the epsilon ball \(B_r(0) = (-r, r) \not\subseteq \R\) since \(-r < 0\) and the interval \([0, 1]\) contains no numbers less than 0.
+\end{exmp}
+
+\begin{exmp}{}{}
+\((0, 1) \subseteq \R\) is open. To show that this is open, consider any point \(x\in (0, 1)\). Your task is to find some \(r\) small enough such that \(B_r(x)\) is entirely contained within \((0, 1)\). Remember that \(r\) can be expressed in terms of \(x\). It may also be helpful to consider the fact that \(B_r(x)= (x - r, x + r)\).
+\end{exmp}
+\begin{exmp}{}{S_is_open}
+Let \((S, d)\) be a metric space. \(S\) is open, and \(\emptyset\) is open (reminder that \(\emptyset\) is the empty set). To see why \(S\) is open, consider any point \(x \in S\). The epsilon ball \(B_r(x)\) can only contain points in defining set of the metric space \(S\), and so \(B_r(x) \subseteq S\). Thus, \(S\) is open. We say that the empty set is trivially open because there are no elements in it, and so no such epsilon balls can be constructed on the empty set.
+\end{exmp}
+The following theorem will be proven very explicitly to help build some intuition with open sets. Subsequent proofs will not be broken down as deeply.
+\newline
+\begin{thm}{}{}
+Let \((S, d)\) be a metric space. For any \(x \in S\), and for any \(r > 0\), \(B_r(x)\) is an open subset in \(S\).
+\newline
+\newline 
+To prove this statement, we must show that for any \(y \in B_r(x)\), we can find some \(s > 0\) such that \(B_s(y) \subseteq B_r(x)\). We can think of this intuitively as follows: the point \(y\) must be at some distance \(d < r\) away from \(x\). Thus, we know that we can find points between \(y\) and the border of \(B_r(x)\) by considering those points that are of distance \(r - d\) away from \(y\). So, we let \(s = d - r\). Thus, the maximum distance of any point in \(B_s(y)\) from \(x\) will be \(< d + s = d + (r - d) = r\), and so this point will also lie in \(B_r(x)\). Remember that to show \(B_s(y) \subseteq B_r(x)\), it is sufficient to show that \(a \in B_s(y) \implies a \in B_r(x)\). We can formalize our intuition by using the triangle inequality and the following diagram:
+	%TODO Insert diagram for showing epsilon ball is an open subset
+\begin{proof}
+	For any \(y \in S\), define \(D := d(x, y) < r\), and \(s := r - D > 0\). Consider some \(z \in B_s(y)\).
+	\begin{equation*}
+  		d(x,z) \leq d(x,y) + d(y,z) = D + d(y,z) < D + s = r
+	\end{equation*}
+	This implies that \(B_s(y) \subseteq B_r(x)\), and since \(y \in S\) is arbitrary, we have shown that \(B_r(x)\) is open.
+
+\end{proof}
+\end{thm}
+
+\begin{thm}{}{union_of_open_sets_is_open}
+
+Let \((S, d)\) be a metric space. Let \(U\) be a collection of open sets (of potentially infinite size): \(U = \{u_i : i \in I\}\). Then,
+	\begin{equation*}
+  		\bigcup_{i \in I}u_i \textrm{ is open.}
+	\end{equation*}
+In other words, the union of any collection of open sets is an open set.
+\newline 
+
+Intuitively, we can consider the fact that for any element x in one of the open sets \(u_i\), there will exist \(r > 0\) such that the epsilon ball of radius \(r\) is also contained in \(u_i\) since it is given that each \(u_i\) is open. Thus, since the epsilon ball is contained in \(u_i\), that same epsilon ball must also be contained in the union of all the \(u_i\). This is true since no elements are lost when unioning a collection of sets. Thus, since an epsilon ball exists for any element in the union of the \(u_i\), it follows by definition that the the union of the \(u_i\) is also an open set.
+\begin{proof}
+Consider any \(x \in \bigcup_{i \in I}u_i\). We can infer that there exists some \textit{i} such that \(x \in u_i\). Since \(u_i\) is open, there exists \(r > 0\) such that \(B_r(x) \subseteq u_i\). Thus, it follows that \(B_r(x) \subseteq \bigcup_{i \in I}u_i\). Since our choice of \(x\) was arbitrary, this logic must hold for all \(x \in \bigcup_{i \in I}u_i\). Thus, \(\bigcup_{i \in I}u_i\) is an open set.
+\end{proof}
+
+\end{thm}
+The following is also worth noting: \newline 
+\begin{exmp}{}{}
+In the metric space \((\R, d_{std})\):
+\begin{itemize}
+  \item For \(a \leq b \in \R\), the open interval \((a, b)\) is an open set.
+  \item For \(a \in \R\), the open intervals \((- \infty, a)\), and \((a, \infty)\) are open sets.
+  \item For \(a \leq b \in \R\), the intervals \([a, b)\), \((a, b]\), and \([a, b]\) are \textbf{not} open sets.
+\end{itemize}
+These results can easily be proven by using similar logic to that of example 3. Try thinking them through!
+\end{exmp}
+
+
+
+\subsection{Closed Sets}
+Naively, one may think that a closed set is simply a set that is not open. However, the definition of a closed set differs slightly from this, which may seem a bit counter intuitive. Instead, we chose to call a set closed if its \textit{complement} is open. This means that it is possible to have a set that is both open and closed, or a set that is not open and not closed (some examples will be discussed later).
+\newline
+
+\begin{defn}{Closed Set}{}
+Let \((S, d)\) be a metric space. Let \(E \subseteq S\). \newline 
+\(E\) is \textbf{closed} if \(E^C\) is \textit{open}.
+\newline 
+
+Remember that \(E^C\) is called the \textit{complement} of \(E\), and is defined as \(E^c := \{x \in S : x \not \in E\}\).
+\end{defn}
+\begin{exmp}{}{}
+\([0, 1] \subseteq \R\) is closed. Since a closed set is defined by whether its complement is open, we must consider \([0,1]^C = (- \infty, 0) \cup (1,  \infty)\). As seen in example 5, both \((- \infty, 0)\) and \((1, \infty)\) are open, and by theorem \ref{thm:union_of_open_sets_is_open}, the union of open sets is also an open set. Thus, \([0,1]^C\) is open, and so \([0,1]\) is closed. Similarly, it can be shown that for any \(a<b \in \R\), the closed interval \([a,b]\) is also a closed set.
+\end{exmp}
+\begin{exmp}{}{}
+\((0, 1) \subseteq \R\) is not closed. \((0, 1)^C = (-\infty, 0] \cup [1, \infty)\), which is not open (seen by considering an epsilon ball centered at 0 or 1: \(B_r(0)\) or \(B_r(1)\)). Since \((0, 1)^C\) is not open, \((0, 1)\) is not closed.
+\end{exmp}
+\begin{exmp}{}{}
+\(S\) is both open \textbf{and} closed and \(\emptyset\) is both open \textbf{and} closed. We already showed in example \ref{exmp:S_is_open} that \(S\) is open and \(\emptyset\) is open. Note that \(S^C = \emptyset\) and \(\emptyset^C = S\). Thus, it follows that \(S\) and \(\emptyset\) are also closed.
+\end{exmp}
+\begin{exmp}{}{limit_point_intro}
+\(E = \{ \frac{1}{n} : n \in \N \} \subseteq \R\) is not closed. \begin{proof}
+\(0 \not \in E \implies 0 \in E^C\). For any \(r > 0\), there must exist \(x \in E\) such that \(x \in B_r(0)\). This follows because the sequence \((\frac{1}{n})\) converges to 0, and so the sequence will get within \(\epsilon\) of 0 for any \(\epsilon > 0\). In other words, \(B_r(0) \cap E \not = \emptyset\). This implies that \(B_r(0)\) is not entirely contained within \(E^C\), and so \(E^C\) is not open. Thus, \(E\) is not closed.
+\end{proof}
+
+\end{exmp}
+
+
+
 
 
 \subsection{Closure}
-%TODO Define limit points
+Please carefully review example \ref{exmp:limit_point_intro}, as this will motivate our coming discussion of limit points. Note what we observed: we had a sequence contained within \(S\) that converged to a value that was not in \(S\). This led us to conclude that \(S\) was not closed, since any epsilon ball centered at the convergent point must contain a point in \(S\) by definition of convergent sequence. Thus, no epsilon ball centered at the convergent point can be contained entirely inside \(S^C\), which means \(S^C\) cannot be an open set. This shows that \(S\) is not closed. 
+\begin{defn}{Limit Point}{limit_point}
+Let \((S, d)\) be a metric space. Let \(E \subseteq S\). We say \(x \in S\) is a \textit{limit point} of E if for all \(r > 0\), \(B_r(x) \cap E\) contains some point \(y \in S\) such that \(x \not = y\). Here are some equivalent formulations of this idea:
+	\begin{itemize}
+  		\item \(E\) contains points arbitrarily close to \(x\) that are not equal to \(x\).  
+  		\item For any \(\epsilon > 0\), one can find \(y \in E\) such that \(y \in B_{\epsilon}(x)\) and \(x \not = y\)
+  		\item There exists a sequence \((s_n)\) where each \(s_n \in E\) that converges to \(x\) and \(s_n\) is not constant valued (such as \(s_n = x\) for all n).
+	\end{itemize}
+The following two remarks are also important to keep in mind: 
+\begin{itemize}
+  \item It is possible for a limit point of \(E\) to not be an element of \(E\). For example, \(E = (0, 1) \subseteq \R\) has a limit point of 0 and a limit point of 1, but neither is contained within \(E\).
+  \item It is possible that a point in \(E\) is \textbf{not} a limit point of E. For example, consider example \ref{exmp:limit_point_intro}. \(1 \in E\), but 1 is not a limit point of \(E\) since \(B_{\frac{1}{4}} \cap E = \{1\}\), and so since the intersection does not contain any values besides 1, we know that 1 is not a limit point of \(E\) by definition. 
+\end{itemize}
 
-%TODO Define the closure of a set
 
-%TODO Show that the statement 'A is closed' is equivalent to 'A = its closure'. A corollary to this is that the smallest closed set containing A is its closure
+\end{defn}
+\begin{defn}{Closure}{closure}
+Let \((S, d)\) be a metric space. Let \(E \subseteq S\). The \textit{closure} of \(E\) is written as \(\overline{E}\). 
+\begin{equation*}
+  \overline{E} := E \cup \{\textrm{limit points of E}\}
+\end{equation*}
 
-\subsection{Compact Sets}
-%TODO Define compact sets
+\end{defn}
+
+
+%TODO Show that a corollary to this is that the smallest closed set containing A is its closure
+\begin{thm}{}{}
+Let \((S, d)\) be a metric space. Let \(E \subseteq S\). \newline 
+
+\(E\) is closed \(\iff\) \(E = \overline{E}\) \newline 
+
+For intuition of the forward direction, we notice that if a subset is closed but doesn't contain all of its limit points, we will be able to arrive at a contradiction by the same reasoning above. Thus, we will be able to show that a closed set must contain all of its limit points, and thus be equal to its closure.\newline
+
+For the reverse direction, consider why we began our discussion of limit points. We saw that if there were any limit points of our subset that were not contained in our subset, then the complement of our subset would never be open, and so our subset would never be closed. However, if our subset contained all of its limit points, then the complement should be open, meaning that our subset will be closed. We will now formalize both of these proofs. \newline 
+
+Forward Direction:
+\begin{proof}
+Assume \(E\) is a closed subset. Showing that \(E\) is equal to its closure is equivalent to showing that \(E\) contains all of its limit points. This is equivalent to showing that no limit points of \(E\) are in \(E^C\). Consider some limit point of \(E\), \(x \in S\). By definition of limit point, \(B_r(x) \cap E \not = \emptyset\) for all \(r > 0\). Since \(E\) is closed, \(E^C\) is open. Since \(E^C\) is open, it cannot contain the point \(x\) since \(B_r(x)\not\subseteq E^C\) for any \(r > 0\). Finally, \(x \not\in E^C \implies x \in E\). Since the limit point \(x\) is arbitrary, \(E\) contains all of its limit points.
+\end{proof}
+Reverse Direction: 
+\begin{proof}
+Assume \(E = \overline{E}\). To show \(E\) is closed, we must show \(E^C\) is open. Consider any \(x \in E^C\). Since \(E\) contains all of its limit points, we know that \(x\) is not a limit point of \(E\). This implies that \(B_r(x) \cap E = \emptyset \textrm{ or } \{x\}\) for some \(r > 0\). However, by assumption \(x \not\in E\), so \(B_r(x) \cap E = \emptyset\). Thus, \(B_r(x)\) must be contained entirely in \(E^C\), and so \(E^C\) is open. This implies \(E\) is closed.
+\end{proof}
+\end{thm}
+\begin{exmp}{}{}
+\(E = \{ \frac{1}{n} : n \in \N \} \cup \{0\} \subseteq \R\) is closed. We first notice that the only limit point of \(\{ \frac{1}{n} : n \in \N \}\) is 0, and so \(E\) contains all of its limit points. Thus, \(E\) is closed.
+\end{exmp}
+
+
+
+\subsection{Compact Subsets}
+\begin{defn}{Open Covers and Finite Subcovers}{open_cover}
+Let \((S, d)\) be a metric space. Let \(E \subseteq S\). Let \(\{u_i : i \in I\}\) be a collection of open subsets of \(S\).
+\begin{itemize}
+  \item \(\{u_i : i \in I\}\) is called an \textbf{open cover} of \(E\) if: 
+  	\begin{equation*}
+  		E \subseteq \bigcup_{i \in I}u_i
+	\end{equation*}
+	Equivalently, for any \(x \in E\), there exists \(i \in I\) such that \(x \in u_i\). In words: the union of the open sets contains all of \(E\).
+  \item We say an open cover has a \textbf{finite subcover} if there exist finitely many \(i_1, i_2, \dots,i_n\) such that \(E \subseteq \bigcup_{k = 1}^n u_{i_k}\).
+\end{itemize}
+
+\end{defn}
+
+\begin{defn}{Compact Subset}{compact_subset}
+Let \((S, d)\) be a metric space. Let \(E \subseteq S\). \newline 
+\(E\) is a \textbf{compact} subset if \textbf{\textit{every}} open cover of \(E\) has a \textit{finite subcover}.
+	\newline 
+	
+	This definition should make it easy to show that a subset is not compact. We only have to find 1 example of an open cover of \(E\) that has \textbf{no} finite subcover to show that \(E\) is not compact.
+\end{defn}
+\begin{exmp}{}{}
+\(\N = \{1, 2, 3, \dots\} \subseteq \R\) is not compact. We can show this by finding some open cover of \(\N\) that has no finite subcover. Since \(\N\) is of infinite size, it shouldn't be hard to create an open cover that requires infinitely many sets to cover all of \(\N\). For example, consider \(\{u_n = (n - \frac{1}{2}, n + \frac{1}{2}) : n \in N\}\). Each \(u_n\) is open, and for any \(x \in \N\), we know that \(x \in u_x\) by construction (if this is not immediately clear, try plugging in \(x\) to \(u_x\)). However, any finite collection of these \(u_n\) must have some largest value of \(n\). This means that \(u_{n+1}\) is not in the finite collection, and so \(n + 1\) is not in the union of the finite collection. Thus, no finite cover can exist for this open cover. 
+\end{exmp}
+\begin{exmp}{}{}
+\(E = \{ \frac{1}{n} : n \in \N \} \cup \{0\} \subseteq \R\) is compact. Consider any open cover \(\{u_i : i \in I\}\). Since \(0 \in E\), there must exist \(i \in I\) such that \(0 \in u_i\). Since \(u_i\) is open, there exists \(r > 0\) such that \(B_r(0) \subseteq u_i\). Equivalently, \(u_i\) contains the set \(\{\frac{1}{n} : n > \frac{1}{r}\}\) (this follows from the fact that the values of \(\frac{1}{n}\) that are in \(B_r(0)\) satisfy \(d(\frac{1}{n}, 0) < r\) which means \(\frac{1}{n} < r\)). Note that \(\{ \frac{1}{n} : n \in \N \} = \{ \frac{1}{n} : 1 \leq n \leq \frac{1}{r} \} \cup \{ \frac{1}{n} : n > \frac{1}{r}\}\), and the term on the left of the union has finitely many values of n (since \(r > 0\) is finite), and the term on the right of the union takes on infinitely many values of n. We now want to make use of the fact that there are only finitely many values of \(\frac{1}{n}\) for \(1 \leq n \leq \frac{1}{r}\). Since there are finitely many values, and each value must be covered by at least one \(u_k\), it follows that there must be a finite number of \(u_k\) that cover these values. Finally, we can construct a finite subcover by taking each \(u_k\) along with the \(u_i\) we chose earlier. Thus, any open cover of \(E\) has a finite subcover, and so \(E\) is compact.
+\end{exmp}
+
+%TODO Try to explain intuition for why certain sets are compact and others are not, to prepare for the implication that compact sets are closed and bounded. Need to give more examples, and give commentary on each example.
+
+
 %TODO Define sequentially compact
-See \ref{metric_space_sequence}
+\begin{defn}{Sequentialy Compact}{sequentially_compact}
+Let \((S, d)\) be a metric space. A subset \(E \subseteq S\) is called \textbf{sequentially compact} if for all sequences of points in \(E\), there is a subsequence that converges to a point in \(E\). \newline 
+
+Note that this definition sounds somewhat similar to the definition of a closet subset, but we must be very careful to understand the difference. Earlier we showed that a subset \(E\)
+ is closed if it contains all of its limit points. In other words, every sequence of points in \(E\) that converges (if any exist) must converge to a point in \(E\). However, the definition of sequentially compact is even stronger. It requires that \textbf{\textit{any}} sequence of points in \(E\) (whether or not the sequence converges is irrelevant) \textbf{MUST} have a subsequence that converges to a point in \(E\). Soon, we will prove that sequentially compact is a stronger statement than closedness: i.e. sequentially compact \(\implies\) closed.
+ \end{defn}
+\begin{exmp}{}{}
+Consider \(E = (0, 1) \subseteq \R\). \(E\) is \textbf{not} sequentially compact. Consider the sequence \((1, \frac{1}{2}, \frac{1}{3}, \dots)\). Since this sequence converges to 0, all of its subsequences must also converge to 0. However, \(0 \not \in E\), so \(E\) is not sequentially compact.
+\end{exmp}
+
+
+See definition \ref{defn:metric_space_sequence_convergence}
 
 
 
