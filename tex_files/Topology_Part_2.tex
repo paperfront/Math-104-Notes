@@ -89,6 +89,7 @@ These results can easily be proven by using similar logic to that of example 3. 
 
 
 \subsection{Closed Sets}
+%TODO Intersection of closed sets is closed
 Naively, one may think that a closed set is simply a set that is not open. However, the definition of a closed set differs slightly from this, which may seem a bit counter intuitive. Instead, we chose to call a set closed if its \textit{complement} is open. This means that it is possible to have a set that is both open and closed, or a set that is not open and not closed (some examples will be discussed later).
 \newline
 
@@ -203,17 +204,120 @@ Let \((S, d)\) be a metric space. Let \(E \subseteq S\). \newline
 
 %TODO Define sequentially compact
 \begin{defn}{Sequentialy Compact}{sequentially_compact}
-Let \((S, d)\) be a metric space. A subset \(E \subseteq S\) is called \textbf{sequentially compact} if for all sequences of points in \(E\), there is a subsequence that converges to a point in \(E\). \newline 
+Let \((S, d)\) be a metric space. A subset \(E \subseteq S\) is called \textbf{sequentially compact} if for all sequences of points in \(E\), there is a subsequence that converges to a point in \(E\). See definition \ref{defn:metric_space_sequence_convergence} to review convergence of sequences in metric spaces.
+\newline 
 
-Note that this definition sounds somewhat similar to the definition of a closet subset, but we must be very careful to understand the difference. Earlier we showed that a subset \(E\)
- is closed if it contains all of its limit points. In other words, every sequence of points in \(E\) that converges (if any exist) must converge to a point in \(E\). However, the definition of sequentially compact is even stronger. It requires that \textbf{\textit{any}} sequence of points in \(E\) (whether or not the sequence converges is irrelevant) \textbf{MUST} have a subsequence that converges to a point in \(E\). Soon, we will prove that sequentially compact is a stronger statement than closedness: i.e. sequentially compact \(\implies\) closed.
+Note that this definition sounds somewhat similar to the definition of a closed subset, but we must be very careful to understand the difference. Earlier we showed that a subset \(E\)
+ is closed if it contains all of its limit points. In other words, every sequence of points in \(E\) that converges (if any exist) must converge to a point in \(E\). However, the definition of sequentially compact is even stronger. It requires that \textbf{\textit{any}} sequence of points in \(E\) (whether or not the sequence converges is irrelevant) \textbf{MUST} have a subsequence that converges to a point in \(E\). Soon, we will prove that sequentially compact is a stronger statement than closedness: i.e. sequentially compact \(\implies\) closed. Moreover, similar intuition can be found when considering if compact subsets are bounded. If a subset were to be unbounded, then any sequence in that subset would diverge to infinity, and thus so would every subsequence. This would mean that our subset could not be sequentially compact. By contrapositive, we will find that sequentially compact\(\implies\) bounded
  \end{defn}
 \begin{exmp}{}{}
 Consider \(E = (0, 1) \subseteq \R\). \(E\) is \textbf{not} sequentially compact. Consider the sequence \((1, \frac{1}{2}, \frac{1}{3}, \dots)\). Since this sequence converges to 0, all of its subsequences must also converge to 0. However, \(0 \not \in E\), so \(E\) is not sequentially compact.
 \end{exmp}
+\subsection{Heine-Borel}
+In this section, we will be building up to a big BANG with the Heine-Borel theorem. Heine-Borel tells us that if we are working in \((\R^k, d_{std})\), then closed and bounded \(\implies\) sequentially compact. However, before we get there, we will also prove the following results for any metric space:
+	\begin{equation*}
+  		\textrm{compact \(\iff\) sequentially compact \(\implies\) closed and bounded}
+	\end{equation*}
+Let us begin our proof journey!
+\begin{thm}{}{}
+Let \((S, d)\) be a metric space. Let \(E \subseteq S\). \newline 
+If \(E\) is compact, then \(E\) is closed.\newline
+The intuition on this proof may be a little bit strange. As we saw above, we can more easily show that a sequentially compact set is closed, and since we will soon be proving that compact is equivalent to sequentially compact, we could choose to delay this proof. Instead, this proof is left in the notes to help the reader gain familiarity in working with compact subsets. \newline 
+
+So, why would we expect a compact subset to be closed? We start by noticing that if a subset were not closed, then it must not contain at least one of its limit points. Thus, there exist some sequence in the subset that converges to a point not in the subset. We can imagine constructing an open cover where each subset is very very small, and approaching the limit point. Since this open cover would require an infinite amount of subsets to cover this, the subset cannot be compact. In other words, there is a very strong connection between compactness and limit points.\newline 
+
+While we could construct a proof by contraposition, it is more helpful to see a direct proof. The intuition for the following proof is as follows: To show our subset E is closed, we must show its complement is open. So, we start by considering a point x in the complement. If we knew that E had a finite number of elements, then we could simply pick the point that was closest to x, call the distance between them d, and create an epsilon ball of radius \(\frac{d}{2}\) centered at x. Since d is the distance between x and the closest point to x inside of E, we know that this epsilon ball must be entirely contained in the complement as desired. However, we cannot assume that E has a finite number of elements. Instead, we know that E has a finite subcover. We can now cleverly construct our subcover so that each subset in the cover will be an epsilon ball centered at an element of E. Then, by assumption of compactness, we can find a finite number of these epsilon balls that cover E. Then, we can show that there exists some closest epsilon ball to x, and show that the two epsilon balls do not intersect (by clever selection of the radii). \newline 
+
+\begin{proof}
+Consider some \(x \in E^C\). For any \(y \in E\), let \(r_y = \frac{1}{2} d(x,y)\). Consider the following open cover of E: \(\{B_{r_y}(y) : y \in E\}\). Since E is compact, a finite subcover exists. Let this subcover be \(\{B_{r_{y_i}}(y_i) : 1 \leq i \leq n \}\). Let \(r = min \{ r_{y_{i}} : 1 \leq i \leq n \} \). We claim that \(B_r(x)\) is contained in \(E^C\). To see why, consider any \(z \in B_r(x)\). \(d(x, y_i) \leq d(x, z) + d(z, y_i)\). Thus, \(d(z, y_i) \geq d(x, y_i) - d(x,z) \geq 2r - r = r\). Thus, since the distance between any \(y_i\) and \(z\) is greater than \(r\), \(z\) cannot be contained in any of the open subsets in the finite cover, and thus \(z\) is not in \(E\) as desired. Thus, \(E^C\) is open, and so \(E\) is closed. 
+\end{proof}
+\end{thm}
+
+\begin{thm}{}{}
+Let \((S, d)\) be a metric space. Let \(E \subseteq S\). \newline 
+If E is compact, then E is bounded. \newline 
+
+We have not yet defined what it means for a subset to be bounded. %TODO Introduce definition of bounded
+Why would compactness imply that E bounded? Certainly, there must be some connection between bounding a subset and having a finite subcover, especially if we are able to bound each of the subsets in the subcover. Similarly to the last proof, we can construct a clever open cover that will allow us to get the desired result easily. (Proof coming later, consider epsilon balls of radius 1 centered at each element of E as an open cover).
+
+\end{thm}
+
+\begin{thm}{}{}
+Let \((S, d)\) be a metric space. Let \(E \subseteq S\). \newline 
+If \(E\) is compact, then \(E\) is sequentially compact. In other words, 
+\begin{equation*}
+  \textrm{compact \(\implies\) sequentially compact}
+\end{equation*}
+We will approach this proof by contradiction. We will start by assuming that the compact set \(E\) is not sequentially compact, meaning that there exists some sequence \((a_n) \in E\) which has no convergent subsequence.
+This proof will make use of the fact that the following two statements are equivalent for any sequence \((a_n)\) where each \(a_n \in E\): 
+\begin{itemize}
+  \item \(a \in E\) is a limit of a subsequence of \(a_n\)
+  \item  Any epsilon ball centered at \(a\) must contain an infinite amount of points (this follows from the definition of convergence).
+\end{itemize}
+Thus, if a sequence has no convergent subsequence, then for any point in the subset, there must exist some epsilon ball that contains a finite amount of points in it (as otherwise, a subsequence would converge to this point). Notice that once we have found an epsilon ball that has a finite number of points in it, any smaller epsilon ball centered at the same point must also have a finite number of points in it (you can only lose points in the epsilon ball by decreasing the radius). And now, we can construct a fascinating open cover: since for any element \(x \in E\) we can find an epsilon ball with a finite number of elements within it, we can also shrink this epsilon ball so that \textbf{only} element \(x\) is inside the ball. We know this is possible because once we have an epsilon ball centered at \(x\) with a finite number of elements, we know that there must exist some element in the ball that is closest to \(x\). If we make the radius of the ball smaller than this radius, then the only element left in the ball will be \(x\) itself. We can then put all such epsilon balls into our open cover (where each ball is an open set only containing one element!). Here is the magic: if we assume that \(E\) is compact, that means that this open cover has a finite subcover. By construction, we know this is only possible by including every set in our open cover. Thus, this implies that there are a finite amount of elements in \(E\). We can now finish the proof in a few ways, but one elegant way to view this is as follows: since \(E\) has finitely many values, and each \(a_n \in E\), \(a_n\) also takes on finitely many values. Since there are infinitely many \(a_n\), there must be infinitely many \(a_n\) that take on any given value in \(E\). Thus, we can construct a subsequence of any given value, which clearly converges since the subsequence is constant. This is a contradiction to our original assumption. (Formal proof here)%TODO Insert formal proof here. It follows easily from the above logic
 
 
-See definition \ref{defn:metric_space_sequence_convergence}
+\end{thm}
+\begin{thm}{}{}
+Let \((S, d)\) be a metric space. Let \(E \subseteq S\). \newline 
+\begin{equation*}
+  \textrm{\(E\) is sequentially compact \(\implies\) \(E\) is bounded}
+\end{equation*}
+This proof turns out to be slightly out of scope for now, but the interested reader (myself included, as I soon hope to include the full proof in these notes) should read further online. A proof was provided in lecture, but it relied on two lemmas that were not proven, so the proof did not feel very satisfactory. (I could maybe include this proof in this section as a place holder)
+\end{thm}
+
+We are almost ready to prove the Heine-Borel theorem. First, we have to prove two very helpful theorems.\newline
+
+\begin{thm}{}{closed_compact_intersection}
+Let \((S, d)\) be a metric space. Let \(E, I \subseteq S\). \newline 
+If \(E\) is a closed subset, and \(I\) is a compact subset, then \(E \cap I\) is a compact subset.\newline 
+
+Intuitively, this is saying that if we have a compact set \(I\), and we are considering a closed portion of that compact set (we are taking the intersection of \(I\) with some closed set \(E\), which implies that the portion we are considering is closed because the intersection of any number of closed sets is closed), then that closed portion can also be covered with a finite number of open subsets. We know that we can cover \(I\) with a finite number of open subsets, so we should be able to cover any closed section within \(I\) with a finite number of open subsets as well.
+\begin{proof}
+Since both \(E\) and \(I\) are closed, \(E \cap I\) is also closed. Consider any open cover of \(E \cap I\), \(\{u_\alpha\}\). It follows that \(\{u_\alpha\} \cup (E \cap I)^C\) is an open cover of \(I\). Because \(I\) is compact, a finite subcover must exist. If \((E \cap I)^C\) is in this finite subcover, we can recover a finite subcover of \(E \cap I\) by removing \((E \cap I)^C\) from the subcover. Otherwise, we have a finite cover of \(E \cap I\) since \(E \cap I \subseteq I\)
+\end{proof}
+
+\end{thm}
+
+\begin{thm}{}{}
+Let \(F_1 \supseteq F_2 \supseteq F_3 \supseteq \cdots\) be a 'decreasing' sequence of closed, bounded, nonempty subsets of \(\R^k\). Then, \(F := \bigcap_{n=1}^{\infty}F_n\) is closed, bounded, and nonempty.\newline 
+
+Here we use the term decreasing to imply that each subset \(F_n\) is contained within \(F_{n - 1}\). The fact that \(F\) is closed and bounded should be obvious: we saw earlier that the intersection of any number of closed sets is always closed, and clearly if \(F_1\) is bounded, then all sets contained within \(F_1\) must also be bounded by the same bound as \(F_1\). Thus, we just need to show that the intersection is non empty. If this fact seems trivially true, it may be worth to take a moment to stop and think of why so many conditions are required in the theorem statement. For example, is it necessary that we require for each subset \(F_n\) to be closed? Would the same result hold if \(F_n\) was open? If \(F_n\) was unbounded? (Hint: the answer to both is no!).
+
+\begin{proof}
+Since each \(F_n\) is nonempty, we pick some \(x_n \in F_n\) for each \(n\). Since \(F_1\) is bounded, we know that there exists a convergent subsequence \((x_{k_n})\) by Bolzano-Weirstraus. Let us say that this subsequence converges to \(x_0\). Consider any \(F_i\). We can construct a new subsequence from \((x_{k_n})\) by taking only the values for which \(x_{k_n} \in F_i\), of which there must be infinitely many. This subsequence must also converge to \(x_0\). Thus, \(x_0\) is a limit point of \(F_i\), and since \(F_i\) is closed, \(F_i\) must contain \(x_0\). Thus, \(x_0 \in F_i\) for all \(i\), and so \( \{x_0\} \subseteq \bigcap_{n=1}^{\infty}F_n\), meaning that the intersection is nonempty.
+\end{proof}
+
+\end{thm}
+
+
+Now, we are finally ready to prove our last major result of this section. \newline
+
+\begin{thm}{}{heine_borel}
+Let \((\R^k, d_{std})\) be our metric space. Let \(E \subseteq \R^k\). \newline 
+\begin{equation*}
+  \textrm{\(E\) is closed and bounded \(\implies E\) is compact}
+\end{equation*}
+*Note that this is only true in \(\R^k\).\newline 
+
+To approach this proof, we will actually prove the following statement: \newline 
+\begin{equation*}
+%TODO Expand on definition of k-cell
+  \textrm{Let \(I^k = [a_1,b_1] \times [a_2,b_2] \times\cdots\times [a_k, b_k] \subseteq \R^k\). Then, \(I^k\) is compact.} 
+\end{equation*}
+Here, we call \(I^k\) a 'k-cell'. By definition, \(I^k\) is a cartesian product of \(k\) closed intervals in \(R\). Thus, we can think of a 'k-cell' as a k-dimensional box. Since it is a product of closed intervals, the k-cell is clearly bounded and closed. Finally, we note that for any closed and bounded set \(E \subseteq \R^k\), we can easily construct a k-cell containing \(E\). Thus, if we prove that any k-cell is compact, we will show that any closed and bounded subset \(E \subseteq \R^k\) must also be compact by theorem \ref{thm:closed_compact_intersection} (please review the theorem statements if this is not clear). This proof is much more intuitive when visualized and aided by diagrams. Should this proof be lacking diagrams (I plan to add them later) I highly suggest the reader search for a youtube video on the proof.
+\begin{proof}
+Assume for sake of contradiction that \(I^k\) is not compact. We can subdivide \(I^k\) into \(2^k\) smaller k-cells (see diagrams/video). Since \(I^k\) is not compact, for any open cover \(\{u_\alpha\}\) of \(I^k\), at least one of these \(2^k\) sub-cells must not be coverable by a finite number of open subsets in the cover. Call this sub-cell \(I^k_1\). We can repeat this procedure on \(I^k_1\) to find another sub-cell contained within \(I^k_1\) that cannot be covered by a finite number of open subsets in the cover, and we can call this sub-cell \(I^k_2\). Now, consider \(\bigcap_{n=1}^{\infty}I^k_n\). This is a decreasing sequence of closed and bounded subsets, and so we know that the intersection is non-empty. Let \(x \in \bigcap_{n=1}^{\infty}I^k_n\). We know that there exists \(\alpha\) such that \(x \in u_\alpha\). Since each \(u_\alpha\) is open, we know that there exists \(r > 0\) such that \(B_r(x) \subseteq u_\alpha\). Let \(\delta\) be the diameter of \(I^k\), and thus the diameter of \(I^k_n = \frac{\delta}{2^n}\). Since the diameter of the sub-cells converges to 0 as \(n\) goes to \(\infty\), we know that there exists \(N\) such that \(n > N \implies \frac{\delta}{2^n} < r\). However, this means that \(I^k_n\) is contained within \(u_\alpha\), which is a finite number of open subsets in the open cover. This is a contradiction, and thus, \(I^k\) is compact. 
+\end{proof}
+
+
+\end{thm}
+
+
+
+
+
+
 
 
 
