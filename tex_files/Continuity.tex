@@ -1,5 +1,192 @@
 \section{Continuity}
 \subsection{Continuous Functions}
+First, let us define a few things to prevent confusion later:
+\begin{defn}{Image of a Set}{}
+Let \(f: X\to Y\) be a function from \(X\) to \(Y\) and \(u \subseteq X\). We call \(f(u)\) to be the \textbf{image} of \(u\) in \(Y\):
+\begin{equation*}
+  f(u) := \{f(x) \in Y : x \in u\}
+\end{equation*}
+\end{defn}
+
+\begin{defn}{Pre Image of a Set}{}
+Let \(f: X\to Y\) be a function from \(X\) to \(Y\) and \(u \subseteq Y\). We call \(f^{-1}(u)\) to be the \textbf{pre image} of \(u\) in \(X\):
+\begin{equation*}
+  f^{-1}(u) := \{x \in X : f(x) \in Y\}
+\end{equation*}
+\end{defn}
+
+
+Now, we will define a few notions of continuity in terms of general metric spaces. Then, we will return to our focused analysis on the number system of \(\R\).
+\begin{defn}{Continuity of a Function Between Metric Spaces}{}
+Let \(f: (X,d_x) \to (Y, d_y)\) (A function from the metric space \((X, d_x)\) to the metric space \((Y, d_y)\)). \newline 
+
+We say \(f\) is continuous at some \(x_0 \in X\) if for all sequences \((x_n) \in X\) where \(\limtoinf{n} x_n = x_0\):
+\begin{equation*}
+ \limtoinf{n} f(x_n) = f(x_0) \in Y 
+\end{equation*}
+ In other words, all sequences \((f(x_n))\) must converge to \(f(x_0)\). We call the sequence \((f(x_n))\) to be the \textbf{image} of the sequence \((x_n)\).\newline 
+ 
+ We say that \(f\) is \textbf{continuous} if it's continuous at all \(x_0 \in X\).
+\end{defn}
+An equivalent formulation of the definition of continuity is given below:
+\begin{thm}{Epsilon Delta Continuity}{epsilon_delta_continuity}
+Let \(f: X \to Y\).
+\begin{align*}
+  &\textrm{\(f\) is continuous at \(x_0\in X\)} \\
+  &\iff \\
+   &\forall \epsilon > 0, \exists \delta > 0, s.t.:\\
+    &d_x(x, x_0) < \delta \implies d_y(f(x), f(x_0)) < \epsilon
+\end{align*}
+Notice that we can rewrite the last line above in the language of open balls:
+\begin{equation*}
+  x \in B_\delta(x_0) \implies f(x) \in B_\epsilon(f(x_0))
+\end{equation*}
+
+For intuition, let us discuss the forward direction. We can easily show that the result holds by pursuing a proof by contradiction. In this case, we would assume that there exists some \(\epsilon > 0\) such that for all \(\delta > 0\), there will exist some \(x\) that is within \(\delta\) of \(x_0\), but the distance between \(f(x)\) and \(f(x_0)\) will be greater than \(\epsilon\). This means that for any \(B_{\delta}(x_0)\) we can find some \(x \in B_{\delta}(x_0)\) such that \(d_y(f(x), f(x_0)) \geq \epsilon\). Since \(\delta\) can be arbitrarily small, we know that we can find a convergent sequence \((x_n)\) which converges to \(x_0\) by having each \(x_n\) be an element of a smaller and smaller delta ball centered at \(x_0\) that allows \(d_y(f(x), f(x_0)) \geq \epsilon\). This means that the sequence \((f(x_n))\) cannot converge to \(f(x_0)\), which is a contradiction. We can formalize this thinking as well. \newline 
+
+Forward Direction:
+\begin{proof}
+Assume \(f\) is continuous at \(x_0 \in X\). For sake of contradiction, we will assume the negation of the right side of the implication: there exists some \(\epsilon \geq 0\) such that for all \(\delta > 0\), there exists \(x \in X\) such that:
+\begin{align*}
+  &x \in B_{\delta}(x_0) \\
+  &d_y(f(x), f(x_0)) \geq \epsilon
+\end{align*}
+Thus, we will create a sequence \((x_n)\) where \(x_n \in B_{\frac{1}{n}}(x_0)\) and \(d_y(f(x_n), f(x_0)) \geq \epsilon\) (these \(x_n\) are guaranteed to exist by the assumption). This sequence converges to \(x_0\), but \((f(x_n))\) does not converge to \(f(x_0)\) which is a contradiction to the definition of continuity.
+
+\end{proof}
+
+Reverse Direction:
+\begin{proof}
+Assume that:
+\begin{align*}
+   &\forall \epsilon > 0, \exists \delta > 0, s.t.:\\
+    &d_x(x, x_0) < \delta \implies d_y(f(x), f(x_0)) < \epsilon
+\end{align*}
+In the language of open balls, we have \(x \in B_\delta(x_0) \implies f(x) \in B_\epsilon(f(x_0))\). Now, consider any sequence \((x_n) \in X\) that converges to \(x_0\). This means that there exists \(N > 0\) such that \(n > N \implies d_x(x_n, x_0) < \delta \iff x_n \in B_\delta(x_0) \implies f(x_n) \in B_\epsilon(f(x_0)) \implies d_y(f(x_n), f(x_0)) < \epsilon \implies (f(x_n))\) converges to \(f(x_0)\). Thus, any sequence \((x_n) \in X\) that converges to \(x_0\) must also have its image converge to \(f(x_0)\), and so the definition of continuity is satisfied.
+\end{proof}
+
+
+\end{thm}
+
+\begin{exmp}{}{}
+Let us see a quick corollary of theorem \ref{thm:epsilon_delta_continuity}: \newline 
+
+Assume \(f: X \to Y\) is continuous. Consider any \(x_0 \in X\). Then for any \(\epsilon > 0\), there exists \(\delta > 0\) such that: 
+\begin{equation*}
+  f(B_\delta(x_0)) \subseteq B_\epsilon(f(x_0))
+\end{equation*}
+
+This is stating that the image of the delta ball will be contained in the epsilon ball. This is simply the result of applying theorem \ref{thm:epsilon_delta_continuity} to all \(x \in B_\delta(x_0)\).
+
+\end{exmp}
+
+
+Finally, we will show a third notion of continuity that is slightly more general. By this I mean that it is a valid definition of continuity in topological spaces, which are more general versions of metric spaces.
+
+\begin{thm}{Continuity by Open Sets}{}
+Consider some \(f:X\to Y\). The following statements are equivalent:
+\begin{align*}
+  &f \textrm{ is continuous}\\
+  &\iff \\
+  &u \underset{open}{\subseteq}Y \implies f^{-1}(u) \underset{open}{\subseteq} X.
+\end{align*}
+
+In otherwords, this theorem states that saying \(f\) is continuous is equivalent to saying that any open subset of \(Y\) must have an open pre image in \(X\).\newline 
+
+The intuition for this proof follows from the epsilon delta definition of continuity. Namely, consider the formulation where we view the implication in terms of open balls. This allows the proof to flow naturally. For the forward direction, we want to show that for any open subset of \(Y\) and any \(x_0\) in the pre image of the subset, we can find a \(\delta\) such that the delta ball centered at \(x_0\) will be contained within the pre image of the subset. \newline 
+
+Forward Direction:
+\begin{proof}
+Consider any open subset \(u \subseteq Y\). Consider any \(x \in f^{-1}(u)\). Since \(u\) is open, there exists \(\epsilon > 0\) such that \(B_\epsilon(f(x)) \subseteq u\). Since \(f\) is continuous, there exists \(\delta > 0\) such that \(f(B_\delta(x)) \subseteq B_\epsilon(f(x_0)) \subseteq u\). This directly implies that \(B_\delta(x) \subseteq f^{-1}(u)\), and thus, \(f^{-1}(u)\) is open.
+\end{proof}
+Reverse Direction:
+\begin{proof}
+Suppose that for any open subset \(u \subseteq Y\), it holds that \(f^{-1}(u)\) is an open subset of \(X\). Consider any sequence \((x_n) \in X\) that converges to \(x_0\). Since \(B_\epsilon(f(x_0))\) is an open subset of \(Y\), it must hold that \(f^{-1}(B_\epsilon(f(x_0)))\) is an open subset of \(X\). Thus, there must exist some \(\delta > 0\) such that \(B_\delta(x_0) \subseteq f^{-1}(B_\epsilon(f(x_0)))\). This directly implies that \(f(B_\delta(x_0)) \subseteq B_\epsilon(f(x_0))\), and thus \(f\) is continuous by theorem \ref{thm:epsilon_delta_continuity}.
+\end{proof}
+\end{thm}
+
+\begin{thm}{Image of Compact Subset is Compact}{compact_image}
+Let \(f: X \to Y\) be continuous function. 
+\begin{equation*}
+  E \subseteq X \textrm{ is compact} \implies f(E) \subseteq Y \textrm{ is compact}
+\end{equation*}
+Intuition: This is saying that if we can always cover \(E\) with a finite number of open sets in an open cover, then we should always be able to do the same for \(f(E)\). The proof will be rather simple, as we can relate an open cover of \(f(E)\) to an open cover of \(E\) using the third definition of continuity.
+
+
+\begin{proof}
+We know that if \(f\) is continuous, then for any open cover \(U\) of \(f(E)\), then \(f^{-1}(u\in U)\) will be an open subset of \(X\). Moreover, \(\{f^{-1}(u) : u \in U\}\) is an open cover of \(E\) since for any \(x \in E\), \(f(x) \in u_i\) for some \(i\). Thus, since \(E\) is compact, we can find a finite subcover of \(\{f^{-1}(u) : u \in U\}\). Call this subcover \(\{f^{-1}(u_i) : 1 \leq i \leq n\}\). Then, \(\{ u_i : 1 \leq i \leq n\}\) is a finite subcover of \(f(E)\) since for any \(f(x) \in f(E)\), there must be some \(x \in E\) such that for some \(i\), \(x \in f^{-1}(u_i)\). Thus \(f(x) \in u_i\). Therefore, for any open cover of \(f(E)\), we are able to construct a finite subcover.
+\end{proof}
+
+\end{thm}
+
+\begin{thm}{Extreme Value Theorem for Compact Sets}{evt_compact}
+If \(f: X \to \R\) is continuous, and \(E \subseteq X\) is compact, then:
+\begin{itemize}
+  \item \(f\) is bounded on \(E\) (there exists \(M > 0\) s.t. \(|f(x)| < M\) for all \(x \in E\))
+  \item \(f\) attains its maximum and minimum on \(E\) (there exists \(x_1, x_2 \in E\) such that \(f(x_1) \leq f(x) \leq f(x_2)\) for all \(x \in E\)) 
+\end{itemize}
+
+Intuition: The first bullet point should be very obvious from our earlier discussion on compact sets. Namely, we proved that all compact sets are bounded. \newline 
+
+The second bullet point will make use of the fact that the supremum and infimum exist for bounded sets in \(\R\), and moreover, since \(f(E)\) is compact by theorem \ref{thm:compact_image}, \(f(E)\) is also closed and bounded. Thus, the supremum and infimum of \(f(E)\) belong to \(f(E)\). This will allow us to find the values of \(x \in E\) that correspond to the supremum and infimum, and the claim will easily follow. \newline 
+\begin{proof}
+The first bullet point follows from theorem \ref{thm:compact_implies_bounded}. \newline 
+
+Since \(f(E)\) is also closed by theorem \ref{thm:compact_implies_closed}, it follows that \(\sup f(E) \in f(E)\) and \(\inf f(E) \in f(E)\) (if \(\sup f(E)\) and \(\inf f(E)\) were not in \(f(E)\), then they would have to be limit points of \(f(E)\), but since \(f(E)\) is closed it must contain all of its limit points). Thus, there exist \(x_1,x_2 \in E\) such that:
+\begin{itemize}
+  \item \(\sup f(E) = f(x_2)\)
+  \item \(\inf f(E) = f(x_1)\)
+\end{itemize}
+Thus, \(f(x_1) \leq f(x) \leq f(x_2)\) for all \(x \in E\).
+\end{proof}
+
+
+\end{thm}
+\begin{exmp}{}{}
+We will often use the extreme value theorem in real analysis when dealing with some interval \([a,b]\). We can use theorem \ref{thm:evt_compact} along with the fact that \([a,b]\subseteq \R\) is compact to show that any continuous \(f: [a,b] \to \R\) will attain its max and min on \([a,b]\).
+
+\end{exmp}
+
+\begin{thm}{Image of Connected Subset is Connected}{connected_image}
+Let \(f:X\to Y\) be continuous. Then:
+\begin{equation*}
+  E \subseteq X \textrm{ is connected} \implies f(E) \subseteq Y \textrm{ is connected}
+\end{equation*}
+See definition \ref{defn:connected} to review definition of connected. \newline 
+
+\begin{proof}
+Assume for sake of contradiction that \(f(E) \subseteq Y\) is disconnected. Then, there exist \(u_1,u_2 \opensub Y\) that separate \(f(E)\). Since \(f\) is continuous, \(A := f^{-1}(u_1)\) and \(B := f^{-1}(u_2)\) are open subsets of \(E\). Now, note the following:
+\begin{itemize}
+  \item \(E \cap A \neq \emptyset\) and \(E \cap B \neq \emptyset\) because \(u_1\) and \(u_2\) are non-empty.
+  \item For any \(x \in E\), \(f(x) \in f(E)\), and thus \(f(x) \in u_1 \cup u_2\). This implies \(x \in f^{-1}(u_1 \cup u_2) = A \cup B\), and so \(E \subseteq A \cup B\)
+  \item Consider any \(x \in A\). Thus, \(f(x) \in u_1\).  Since \(u_1\) and \(u_2\) are disjoint, \(f(x) \not\in u_2\). Thus, \(x \not \in B\). This holds for all \(x \in A\), and thus \(E \cap A \cap B = \emptyset\)
+\end{itemize}
+These three results in conjunction imply that \(A,B\) separates \(E\), and thus imply that \(E\) is disconnected, which is a contradiction.
+
+\end{proof}
+
+\end{thm}
+
+\begin{thm}{Intermediate Value Theorem}{IVT}
+Let \(I \subseteq \R\) be an interval. Let \(f: I \to \R\) be a continuous function. Then, for all \(a,b \in I, a<b,\) and for all \(y\in (f(a), f(b))\), there exists \(x \in [a,b]\) such that \(f(x) = y\). \newline 
+
+\begin{proof}
+We saw earlier that an interval \([a,b] \in \R\) is connected. Thus, since \(f\) is continuous, \(f([a,b])\) is also a connected subset of \(\R\), and so \(f([a,b])\) is an interval as well. Since \(f(a), f(b) \in f([a,b])\), \(y \in f([a,b])\) as well. This implies that there exists \(x \in [a,b]\) such that \(f(x) = y\).
+\end{proof}
+
+
+\end{thm}
+
+
+
+
+
+
+
+
+
+
+
 \subsection{Uniform Continuity}
 \subsection{Convergence of Sequences of Functions}
 The weakest form of convergence that we will analyze in this course is pointwise convergence.

@@ -219,7 +219,7 @@ In this section, we will be building up to a big BANG with the Heine-Borel theor
   		\textrm{compact \(\iff\) sequentially compact \(\implies\) closed and bounded}
 	\end{equation*}
 Let us begin our proof journey!
-\begin{thm}{}{}
+\begin{thm}{Compact Implies Closed}{compact_implies_closed}
 Let \((S, d)\) be a metric space. Let \(E \subseteq S\). \newline 
 If \(E\) is compact, then \(E\) is closed.\newline
 The intuition on this proof may be a little bit strange. As we saw above, we can more easily show that a sequentially compact set is closed, and since we will soon be proving that compact is equivalent to sequentially compact, we could choose to delay this proof. Instead, this proof is left in the notes to help the reader gain familiarity in working with compact subsets. \newline 
@@ -233,7 +233,7 @@ Consider some \(x \in E^C\). For any \(y \in E\), let \(r_y = \frac{1}{2} d(x,y)
 \end{proof}
 \end{thm}
 
-\begin{thm}{}{}
+\begin{thm}{Compact Implies Bounded}{compact_implies_bounded}
 Let \((S, d)\) be a metric space. Let \(E \subseteq S\). \newline 
 If E is compact, then E is bounded. \newline 
 
@@ -312,6 +312,32 @@ Assume for sake of contradiction that \(I^k\) is not compact. We can subdivide \
 
 
 \end{thm}
+
+\subsection{Connectedness}
+So far, these notes have mostly maintained the correct lecture order for UC Berkeley's Math 104 following the Ross textbook. For this subsection, I will take a small detour to cover the notion of connectedness. It is likely that you may find this information temporarily irrelevant. Feel free to come back to this section at any time.
+\begin{defn}{Disconnected Subset}{connected}
+Let \((S, d)\) be a metric space. Let \(E \subseteq S\).\newline 
+
+E is called \textbf{disconnected} if there exist \(u_1, u_2 \underset{open}{\subseteq} S\) that 'separates E' i.e.:
+\begin{itemize}
+  \item \(E \cap u_1 \neq \emptyset, E \cap u_2 \neq \emptyset\)
+  \item \(E \subseteq u_1 \cup u_2\)
+  \item \(E \cap u_1 \cap u_2 = \emptyset\)
+\end{itemize}
+Otherwise, \(E\) is called \textbf{connected}.
+\end{defn}
+
+\begin{exmp}{}{}
+For \(S = \R\), the subset \(E = [0, 1) \cup (1, 2]\) is disconnected. Proof: \(u_1 = (-1, 1), u_2 = (1, 3)\)
+\end{exmp}
+
+\begin{thm}{}{}
+\(E \subseteq R\) is connected \(\implies\) \(E\) is an interval.\newline 
+
+Proof: Ross 22 %Todo fill in proof of connected subset in R is an interval
+\end{thm}
+
+
 
 
 
